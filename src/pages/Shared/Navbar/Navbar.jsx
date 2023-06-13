@@ -27,14 +27,14 @@ const Navbar = () => {
   </div>
   <div className="navbar-center hidden lg:flex">
     <ul className="menu menu-horizontal px-1">
-      <li><a>Home</a></li>
+      <li><Link to='/'>Home</Link></li>
        <li> <Link>Instructors</Link></li>
       <li><a>Classes</a></li>
       <li><Link>Dashboard</Link></li>
     </ul>
   </div>
   <div className="navbar-end">
-    <a className="btn btn-outline">login</a>
+    <Link to='/login' className="btn btn-outline">login</Link>
   </div>
 </div>
         </div>
