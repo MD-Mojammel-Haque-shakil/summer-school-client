@@ -1,7 +1,6 @@
 
 
 const Classes = () => {
-
     const handleAddNewClass = event =>{
         event.preventDefault();
         const form = event.target;
