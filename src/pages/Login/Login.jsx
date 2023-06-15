@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 
 const Login = () => {
-    const {signIn} = useContext(AuthContext);
+   const {signIn } = useContext(AuthContext);
     const handleSignInWIthEmail = (event)=>{
         event.preventDefault();
         const form = event.target;
@@ -22,7 +22,8 @@ const Login = () => {
         console.log(error)
       })
     }
-
+ 
+   
     return (
        <div className="w-2/3 mx-auto my-4">
        <div className="hero min-h-screen bg-base-200">
@@ -52,7 +53,7 @@ const Login = () => {
         </div>
         <div className="form-control mt-6">
           <button className="btn btn-info">Login</button>
-          <button className="btn btn-info mt-2">Login With google</button>
+          {/* <button onClick={handleGoogleLogin} className="btn btn-info mt-2">Login With google</button> */}
            <Link to='/signup'> <p><span className="text-warning">Are u new here? Please Sign Up first</span></p></Link>
         </div>
         </form>
