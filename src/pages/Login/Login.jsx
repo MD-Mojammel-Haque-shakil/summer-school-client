@@ -54,7 +54,7 @@ const Login = () => {
         <div className="form-control mt-6">
           <button className="btn btn-info">Login</button>
           {/* <button onClick={handleGoogleLogin} className="btn btn-info mt-2">Login With google</button> */}
-           <Link to='/signup'> <p><span className="text-warning">Are u new here? Please Sign Up first</span></p></Link>
+           <Link to='/register'> <p><span className="text-warning">Are u new here? Please Sign Up first</span></p></Link>
         </div>
         </form>
       </div>

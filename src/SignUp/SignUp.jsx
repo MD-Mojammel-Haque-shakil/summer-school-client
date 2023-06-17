@@ -1,80 +1,180 @@
 import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+
+import Swal from "sweetalert2";
 import { AuthContext } from "../Provider/AuthProvider";
-import { updateProfile } from "firebase/auth";
+// import useAuth from "../../hooks/useAuth";
+// import SocialLogin from "../SocialLogin/SocialLogin";
 
 const SignUp = () => {
-    const { createUser} = useContext(AuthContext);
+  const navigate = useNavigate();
+  const { createUser, updateUserProfile} = useContext(AuthContext)
 
-    const handleSignUp = event =>{
-        event.preventDefault();
-        const form = event.target;
-        const name = form.name.value;
-        const email = form.email.value;
-        const password = form.password.value;
-        const photo = form.photo.value;
-        console.log(name, email, password, photo)
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    // watch,
+    // reset,
+  } = useForm();
 
-        createUser(email, password)
-        .then(result =>{
-            const user = result.user;
-            console.log(user)
-            
-            updateProfile(user, {
-                displayName: name, photoURL: photo
-              })
-              .then(() => {
-                alert('registation completed')
-             })
-        })
-        .catch(error=>{
-            console.log(error)
-        })
-    }
-    return (
-        <div>
-          <div className="card flex-shrink-0 w-full mx-auto my-4 max-w-sm shadow-2xl bg-base-100">
-      <div className="card-body">
-        <h3 className="text-2xl text-center">Sign Up Now</h3>
-        <form onSubmit={handleSignUp}>
-        <div className="form-control">
-          {/* <label className="label">
-            <span className="label-text">Name</span>
-          </label> */}
-          <input type="text" placeholder="name" name='name' className="input input-bordered" />
-        </div>
-        <div className="form-control">
-          {/* <label className="label">
-            <span className="label-text">Email</span>
-          </label> */}
-          <input type="text" placeholder="email" name='email' className="input input-bordered" />
-        </div>
-        <div className="form-control">
-          {/* <label className="label">
-            <span className="label-text">Password</span>
-          </label> */}
-          <input type="password" placeholder="password" name='password' className="input input-bordered" />
-          <label className="label">
-            <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
+  const onSubmit = (data) => {
+    createUser(data.email, data.password)
+      .then((result) => {
+        const loggedUser = result.user;
+        console.log(loggedUser);
+
+        updateUserProfile(data.name, data.photoUrl)
+          .then(() => {
+            const users = {
+              name: data.name,
+              email: data.email,
+              photoURl: data.photoUrl,
+              role: "student",
+            };
+            console.log(users);
+            fetch("http://localhost:5000/users", {
+              method: "POST",
+              headers: {
+                "content-type": "application/json",
+              },
+              body: JSON.stringify(users),
+            })
+              .then((res) => res.json())
+              .then((data) => {
+                if (data.insertedId) {
+                  Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "User created successfully.",
+                    showConfirmButton: false,
+                    timer: 1500,
+                  });
+                }
+              });
+
+            navigate("/");
+          })
+          .catch((error) => {
+            console.log(error);
+            // Handle error while updating user profile
+          });
+      })
+      .catch((error) => {
+        console.log(error);
+        // Handle error while creating user
+      });
+  };
+  return (
+    <div className="flex justify-center items-center h-screen">
+      <form
+        className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 max-w-lg w-full"
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        <h2 className="text-3xl text-center font-bold mb-4 text-yellow-500">Sign Up</h2>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
+            Name
           </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="name"
+            type="text"
+            placeholder="Enter your name"
+            {...register('name', { required: true })}
+          />
+          {errors.name && (
+            <p className="text-red-500 text-xs italic">Name is required</p>
+          )}
         </div>
-        <div className="form-control">
-          {/* <label className="label">
-            <span className="label-text">photo url</span>
-          </label> */}
-          <input type="text" placeholder="photo url" name='photo' className="input input-bordered" />
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
+            Email
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="email"
+            type="email"
+            placeholder="Enter your email"
+            {...register('email', { required: true })}
+          />
+          {errors.email && (
+            <p className="text-red-500 text-xs italic">Email is required</p>
+          )}
         </div>
-        <div className="form-control mt-6">
-          <button className="btn btn-info">Sign Up</button>
-         
-           <Link to='/login'> <p className="mt-4"><span className="text-warning">Already Have Account? Please Login Now</span></p></Link>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
+            Password
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="password"
+            type="password"
+            placeholder="Enter your password"
+            {...register('password', {
+              required: true,
+              minLength: 6,
+              pattern: /(?=.*[A-Z])(?=.*\W)/,
+            })}
+          />
+          {errors.password && errors.password.type === 'required' && (
+            <p className="text-red-500 text-xs italic">Password is required</p>
+          )}
+          {errors.password && errors.password.type === 'minLength' && (
+            <p className="text-red-500 text-xs italic">
+              Password must be at least 6 characters long
+            </p>
+          )}
+          {errors.password && errors.password.type === 'pattern' && (
+            <p className="text-red-500 text-xs italic">
+              Password must contain at least one capital letter and one special character
+            </p>
+          )}
         </div>
-        </form>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="confirmPassword">
+            Confirm Password
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="confirmPassword"
+            type="password"
+            placeholder="Confirm your password"
+            {...register('confirmPassword', { required: true })}
+          />
+          {errors.confirmPassword && (
+            <p className="text-red-500 text-xs italic">Please confirm your password</p>
+          )}
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="photoUrl">
+            Photo URL
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="photoUrl"
+            type="text"
+            placeholder="Enter your photo URL"
+            {...register('photoUrl')}
+          />
+          {errors.photoUrl && (
+            <p className="text-red-500 text-xs italic">Photo URL is required</p>
+          )}
+        </div>
+        <div className="flex items-center justify-center">
+          <button
+            type="submit"
+            className="w-full bg-yellow-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          >
+            Sign Up
+          </button>
+        </div>
+      </form>
+      <div>
       </div>
-      
     </div>
-        </div>
-    );
+  );
 };
 
 export default SignUp;

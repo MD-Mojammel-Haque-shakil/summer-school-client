@@ -1,4 +1,6 @@
+
 import Banner from "../Banner/Banner";
+import ContactUs from "../Banner/ContactUs";
 import ShowClasses from "../SHowClasses/ShowClasses";
 
 const Home = () => {
@@ -6,6 +8,7 @@ const Home = () => {
         <div>
             <Banner></Banner>
             <ShowClasses></ShowClasses>
+            <ContactUs></ContactUs>
         </div>
     );
 };

@@ -1,12 +1,17 @@
 
+import { useContext } from "react";
+import { AuthContext } from "../../Provider/AuthProvider";
 
 const Classes = () => {
+  
+const {user}  = useContext(AuthContext)
     const handleAddNewClass = event =>{
         event.preventDefault();
         const form = event.target;
         const photo = form.photo.value;
         const name = form.name.value;
         const instructorName = form.instructorname.value;
+        const email = form.instructoremail.value;
         const seats = form.availeableseats.value;
         const price= form.price.value;
 
@@ -16,6 +21,7 @@ const Classes = () => {
             instructorName,
             seats,
             price,
+            email
         } 
         
         fetch('http://localhost:5000/classes', {
@@ -53,7 +59,7 @@ const Classes = () => {
                 </div>
                 <div className="form-control">
                     <label className="label">
-                        <span className="label-text">Name</span>
+                        <span className="label-text">Class Name</span>
                     </label>
                     <input type="text" name="name" className="input input-bordered" />
                 </div>
@@ -62,7 +68,13 @@ const Classes = () => {
                     <label className="label">
                         <span className="label-text">Instructor Name</span>
                     </label>
-                    <input type="text" name="instructorname" className="input input-bordered" />
+                    <input type="text" name="instructorname"  defaultValue={user?.displayName}className="input input-bordered" />
+                </div>
+                <div className="form-control">
+                    <label className="label">
+                        <span className="label-text">Instructor Email</span>
+                    </label>
+                    <input type="email" name="instructoremail" defaultValue={user.email} className="input input-bordered" />
                 </div>
                 <div className="form-control">
                     <label className="label">
