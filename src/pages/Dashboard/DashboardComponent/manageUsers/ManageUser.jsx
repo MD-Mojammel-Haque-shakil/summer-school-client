@@ -24,8 +24,7 @@ const handleMakeAdmin = (user)=>{
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
-      },
-      body: JSON.stringify({}),
+      }
     }
   )
     .then((res) => res.json())
@@ -40,8 +39,27 @@ const handleMakeAdmin = (user)=>{
       }
     });
 }
-const handleMakeInstructor = () =>{
-
+const handleMakeInstructor = (user) =>{
+  console.log(user);
+  fetch(`https://learn-language-school-server-mojammelhaque8967-gmailcom.vercel.app/users/instructor/${user._id}`,
+    {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      }
+    }
+  )
+    .then((res) => res.json())
+    .then((data) => {
+      if (data.modifiedCount) {
+        Swal.fire({
+          title: `${user.name} is an instructor Now!`,
+          showConfirmButton: false,
+          timer: 1000,
+          icon: "success",
+        });
+      }
+    });
 }
     return (
         <div>

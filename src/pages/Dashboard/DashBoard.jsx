@@ -1,9 +1,11 @@
 import { Link, NavLink, Outlet } from "react-router-dom";
+import useRoll from "../hooks/useRoll";
 
 
 const Dashboard = () => {
-const isAdmin = true;
-const isInstructor = false;
+
+  const [role] = useRoll()
+  console.log(role)
     return (
         <div>
         <div className="drawer lg:drawer-open">
@@ -18,10 +20,10 @@ const isInstructor = false;
     <label htmlFor="my-drawer-2" className="drawer-overlay"></label> 
     <ul className="menu p-4 w-80 h-full bg-base-200 text-base-content">
       {/* Sidebar content here */}
-      { isAdmin? <>
+      { role?.role=='admin'? <>
        <li><NavLink to='/dashboard/manageclass'>manage classes</NavLink></li>
        <li><NavLink to='/dashboard/manageuser'>manage users</NavLink></li>
-      </> : isInstructor? 
+      </> : role?.role=='instructor'? 
       <> <li><Link to='/classes' >Add classes</Link></li>
        <li><Link to=''>All class</Link></li></> :  <>
        <li><Link>selected classes</Link></li>
