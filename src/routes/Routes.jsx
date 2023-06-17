@@ -10,6 +10,9 @@ import SignUp from "../SignUp/SignUp";
 import ManageUser from "../pages/Dashboard/DashboardComponent/manageUsers/ManageUser";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import ManageClasses from "../pages/Dashboard/DashboardComponent/ManageClasses/ManageClasses";
+import PrivateRoutes from "../pages/Private Routes/PrivateRoutes";
+import AllClass from "../pages/Classes/AllClass";
+
 
 export const router = createBrowserRouter([
     {
@@ -31,12 +34,16 @@ export const router = createBrowserRouter([
             {
                 path: '/classes',
                 element: <Classes></Classes>
-            }
+            },
+            {
+              path: 'allclass',
+              element: <AllClass></AllClass>
+            },
         ]
     },
     {
         path: 'dashboard',
-        element: <Dashboard></Dashboard>,
+        element: <PrivateRoutes><Dashboard></Dashboard></PrivateRoutes>,
         children: [
           {
             path: 'manageuser',

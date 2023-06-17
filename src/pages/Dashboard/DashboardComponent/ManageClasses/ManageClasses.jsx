@@ -1,11 +1,14 @@
-import { useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
+// import { AuthContext } from "../../../../Provider/AuthProvider";
+// import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 
 const ManageClasses = () => {
    const [classes, setClasses] = useState([])
-   
+    // const {user} = useContext(AuthContext)
+    // const axiosSecure = useAxiosSecure();
    useEffect(()=>{
-       fetch("http://localhost:5000/classes")
+       fetch("https://learn-language-school-server-mojammelhaque8967-gmailcom.vercel.app/classes")
        .then(res=>res.json())
        .then(data=>{
            setClasses(data)

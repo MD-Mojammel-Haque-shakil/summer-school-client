@@ -1,6 +1,8 @@
 import { useContext } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
 import { Link } from "react-router-dom";
+import { GoogleAuthProvider, signInWithPopup ,getAuth } from "firebase/auth";
+import app from "../../firebase/firebase.config";
 
 
 
@@ -22,10 +24,25 @@ const Login = () => {
         console.log(error)
       })
     }
- 
+//google log in
+    const auth = getAuth(app);
+    const googleProvider = new GoogleAuthProvider();
+
+    const handleGoogleLogin =()=>{
+      signInWithPopup(auth, googleProvider)
+
+      .then(result=>{
+        const user =result.user;
+        console.log(user);
+      })
+
+      .catch(error=>{
+        console.log(error)
+      })
+}
    
     return (
-       <div className="w-2/3 mx-auto my-4">
+       <div className="w-2/3 mx-auto ">
        <div className="hero min-h-screen bg-base-200">
   <div className="hero-content flex-col lg:flex-row-reverse">
     <div className="text-center ms-4 lg:text-left">
@@ -54,11 +71,12 @@ const Login = () => {
         <div className="form-control mt-6">
           <button className="btn btn-info">Login</button>
           {/* <button onClick={handleGoogleLogin} className="btn btn-info mt-2">Login With google</button> */}
-           <Link to='/register'> <p><span className="text-warning">Are u new here? Please Sign Up first</span></p></Link>
+           
         </div>
         </form>
       </div>
-      
+      <button  onClick={handleGoogleLogin} className='btn btn-primary w-3/4 mx-auto'>Login with Google</button>
+      <Link to='/register'> <p><span className="text-warning mb-2">Are u new here? Please Sign Up first</span></p></Link>
     </div>
   </div>
 </div>

@@ -9,7 +9,7 @@ const ContactUs = () => {
           <div className="">
             <div className="flex flex-col text-center w-full  px-5 md:px-0 mb-10  lg:mb-20">
               <h1 className="text-4xl text-center font-bold my-8">
-                Contact Sport Zone Academy
+                Contact with learn language School
               </h1>
             </div>
             <div className="md:flex px-5 md:px-0 flex-wrap justify-between gap-6  md:space-y-0 space-y-6">
@@ -25,7 +25,7 @@ const ContactUs = () => {
                       Address
                     </h2>
                     <p className="leading-relaxed text-base">
-                      123 Main Street, City, Country
+                      Dhaka-1289, Bangladesh
                     </p>
                   </div>
                 </div>
@@ -39,7 +39,7 @@ const ContactUs = () => {
                     <h2 className="text-gray-700 text-2xl title-font font-bold mb-3">
                       Phone No
                     </h2>
-                    <p className="leading-relaxed text-base">+1 123-456-7890</p>
+                    <p className="leading-relaxed text-base">0176660000</p>
                   </div>
                 </div>
               </Slide>
@@ -53,7 +53,7 @@ const ContactUs = () => {
                       Email / Website
                     </h2>
                     <p className="leading-relaxed text-base">
-                      info@sportzoneacademy.com
+                      info@learnlanguage School.com
                     </p>
                   </div>
                 </div>

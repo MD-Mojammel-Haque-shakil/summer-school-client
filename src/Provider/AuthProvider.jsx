@@ -22,6 +22,14 @@ const AuthProvider = ({children}) => {
         setLoading(true);
         return signInWithPopup(auth, GoogleAuthProvider);
     }
+   
+    const updateUserProfile = (name, photo) => {
+      return updateProfile(auth.currentUser, {
+        displayName: name,
+        photoURL: photo,
+      });
+    };
+  
     const logOut = () => {
       setLoading(true);
       return signOut(auth)
@@ -32,13 +40,6 @@ const AuthProvider = ({children}) => {
           setLoading(false);
           throw error;
         });
-    };
-
-    const updateUserProfile = (name, photo) => {
-      return updateProfile(auth.currentUser, {
-        displayName: name,
-        photoURL: photo,
-      });
     };
 
       useEffect(()=>{

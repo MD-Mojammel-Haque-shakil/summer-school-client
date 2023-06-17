@@ -5,6 +5,7 @@ import { AuthContext } from "../../Provider/AuthProvider";
 const Classes = () => {
   
 const {user}  = useContext(AuthContext)
+console.log(user)
     const handleAddNewClass = event =>{
         event.preventDefault();
         const form = event.target;
@@ -24,7 +25,7 @@ const {user}  = useContext(AuthContext)
             email
         } 
         
-        fetch('http://localhost:5000/classes', {
+        fetch('https://learn-language-school-server-mojammelhaque8967-gmailcom.vercel.app/classes', {
             method: 'POST', 
             headers: {
                 'content-type': 'application/json'
@@ -35,12 +36,12 @@ const {user}  = useContext(AuthContext)
         .then(data => {
             console.log(data);
             if(data.insertedId){
-                // Swal.fire({
-                //     title: 'Success',
-                //     text: 'toy added succecfully',
-                //     icon: 'success',
-                //     showConfirmButton: 'ok'
-                //   })
+            //     Swal.fire({
+            //         title: 'Success',
+            //         text: 'toy added succecfully',
+            //         icon: 'success',
+            //         showConfirmButton: 'ok'
+            //       })
             }
         })
 
@@ -74,7 +75,7 @@ const {user}  = useContext(AuthContext)
                     <label className="label">
                         <span className="label-text">Instructor Email</span>
                     </label>
-                    <input type="email" name="instructoremail" defaultValue={user.email} className="input input-bordered" />
+                    <input type="email" name="instructoremail" defaultValue={user?.email} className="input input-bordered" />
                 </div>
                 <div className="form-control">
                     <label className="label">

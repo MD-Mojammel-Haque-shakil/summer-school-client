@@ -1,19 +1,44 @@
 import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
+import { AuthContext } from "../../../../Provider/AuthProvider";
 
 
 const ManageUser = () => {
-   
+    const {user} = useState(AuthContext)
+    console.log(user)
     const [users, setUsers] = useState([])
     useEffect(()=>{
-        fetch("http://localhost:5000/users")
+        fetch("https://learn-language-school-server-mojammelhaque8967-gmailcom.vercel.app/users")
         .then(res=>res.json())
         .then(data=>{
             setUsers(data)
         })
     }, [])
  
-const handleMakeAdmin = ()=>{
 
+const handleMakeAdmin = (user)=>{
+  console.log(user);
+  fetch(
+    `https://learn-language-school-server-mojammelhaque8967-gmailcom.vercel.app/users/admin/${user._id}`,
+    {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({}),
+    }
+  )
+    .then((res) => res.json())
+    .then((data) => {
+      if (data.modifiedCount) {
+        Swal.fire({
+          title: `${user.name} is an Admin Now!`,
+          showConfirmButton: false,
+          timer: 1000,
+          icon: "success",
+        });
+      }
+    });
 }
 const handleMakeInstructor = () =>{
 
