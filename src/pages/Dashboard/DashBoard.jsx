@@ -1,5 +1,6 @@
 import { Link, NavLink, Outlet } from "react-router-dom";
 import useRoll from "../hooks/useRoll";
+import Navbar from "../Shared/Navbar/Navbar";
 
 
 const Dashboard = () => {
@@ -8,6 +9,7 @@ const Dashboard = () => {
   console.log(role)
     return (
         <div>
+          <Navbar></Navbar>
         <div className="drawer lg:drawer-open">
   <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
   <div className="drawer-content flex flex-col items-center justify-center">
@@ -25,7 +27,7 @@ const Dashboard = () => {
        <li><NavLink to='/dashboard/manageuser'>manage users</NavLink></li>
       </> : role?.role=='instructor'? 
       <> <li><Link to='/classes' >Add classes</Link></li>
-       <li><Link to=''>All class</Link></li></> :  <>
+       <li><NavLink to='/dashboard/myclass'>All class</NavLink></li></> :  <>
        <li><Link>selected classes</Link></li>
        <li><Link>enroll classes</Link></li>
        <li><Link>payment history</Link></li>

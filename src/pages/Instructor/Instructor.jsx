@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 const Instructor = () => {
     const [data, useData]= useState([])
     useEffect(()=>{
-        fetch()
+        fetch("instructor")
     }, [])
     return (
         <div>
