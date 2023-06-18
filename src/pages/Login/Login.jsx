@@ -71,12 +71,13 @@ const Login = () => {
         <div className="form-control mt-6">
           <button className="btn btn-info">Login</button>
           {/* <button onClick={handleGoogleLogin} className="btn btn-info mt-2">Login With google</button> */}
-           
+          <Link to='/register'> <p><span className="text-warning mb-2">Are u new here? Please Sign Up first</span></p></Link>
         </div>
         </form>
       </div>
-      <button  onClick={handleGoogleLogin} className='btn btn-primary w-3/4 mx-auto'>Login with Google</button>
-      <Link to='/register'> <p><span className="text-warning mb-2">Are u new here? Please Sign Up first</span></p></Link>
+
+      <button  onClick={handleGoogleLogin} className='btn btn-primary w-3/4 mx-auto mb-4'>Login with Google</button>
+     
     </div>
   </div>
 </div>

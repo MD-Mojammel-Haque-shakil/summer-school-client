@@ -1,9 +1,11 @@
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import Swal from "sweetalert2";
 import { AuthContext } from "../Provider/AuthProvider";
+// import { GoogleAuthProvider, signInWithPopup,getAuth  } from "firebase/auth";
+// import app from "../firebase/firebase.config";
 // import useAuth from "../../hooks/useAuth";
 // import SocialLogin from "../SocialLogin/SocialLogin";
 
@@ -34,7 +36,7 @@ const SignUp = () => {
               role: "student",
             };
             console.log(users);
-            fetch("http://localhost:5000/users", {
+            fetch("https://learn-language-school-server-mojammelhaque8967-gmailcom.vercel.app/users", {
               method: "POST",
               headers: {
                 "content-type": "application/json",
@@ -66,6 +68,22 @@ const SignUp = () => {
         // Handle error while creating user
       });
   };
+  //google log in
+//   const auth = getAuth(app);
+//   const googleProvider = new GoogleAuthProvider();
+
+//   const handleGoogleLogin =()=>{
+//     signInWithPopup(auth, googleProvider)
+
+//     .then(result=>{
+//       const user =result.user;
+//       console.log(user);
+//     })
+
+//     .catch(error=>{
+//       console.log(error)
+//     })
+// }
   return (
     <div className="flex justify-center items-center h-screen">
       <form
@@ -169,10 +187,14 @@ const SignUp = () => {
           >
             Sign Up
           </button>
+          <Link to='/register'> <p><span className="text-warning mb-2">Are u new here? Please Sign Up first</span></p></Link>
+          {/* <button className='btn btn-primary w-3/4 mx-auto mb-4'>Login with Google</button> */}
         </div>
       </form>
+
       <div>
       </div>
+   
     </div>
   );
 };
